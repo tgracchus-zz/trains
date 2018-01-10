@@ -31,5 +31,13 @@ public class Path {
         return vertices.get(i);
     }
 
+    public boolean endsWith(Vertex vertex) {
+        if (vertices.isEmpty()) {
+            return false;
+        } else {
+            Vertex lastVertex = vertices.get(vertices.size() - 1);
+            return vertex.equals(lastVertex);
+        }
+    }
 
 }

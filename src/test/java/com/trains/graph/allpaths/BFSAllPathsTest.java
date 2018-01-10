@@ -28,7 +28,9 @@ public class BFSAllPathsTest {
 
     @Test
     public void testAllPaths() {
-        List<Path> paths = allPaths.paths(3, testGraph.A(), testGraph);
+        List<Path> paths = allPaths.pathsUpTo(3, testGraph.C(), testGraph.C(), testGraph);
         Assert.assertFalse(paths.isEmpty());
+        List<Path> threeEdgesPaths = allPaths.pathsEqualsTo(3, testGraph.C(), testGraph.C(), testGraph);
+        Assert.assertFalse(threeEdgesPaths.isEmpty());
     }
 }

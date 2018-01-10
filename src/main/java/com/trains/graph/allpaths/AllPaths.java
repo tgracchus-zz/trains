@@ -7,5 +7,8 @@ import com.trains.graph.Vertex;
 import java.util.List;
 
 public interface AllPaths {
-    List<Path> paths(int nodes, Vertex source, Graph graph);
+
+    List<Path> pathsUpTo(int k, Vertex source, Vertex target, Graph graph);
+
+    List<Path> pathsEqualsTo(int k, Vertex source, Vertex target, Graph graph);
 }

@@ -10,23 +10,47 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.function.Function;
 
 public class BFSAllPaths implements AllPaths {
 
     @Override
-    public List<Path> paths(int nodes, Vertex source, Graph graph) {
+    public List<Path> pathsUpTo(int k, Vertex source, Vertex target, Graph graph) {
+        List<Path> allpaths = paths(source, graph, new KEqualOrLess(k));
+        List<Path> finalPaths = new ArrayList<>();
+        for (Path path : allpaths) {
+            if (path.endsWith(target)) {
+                finalPaths.add(path);
+            }
+        }
+        return finalPaths;
+    }
+
+    @Override
+    public List<Path> pathsEqualsTo(int k, Vertex source, Vertex target, Graph graph) {
+        List<Path> allpaths = paths(source, graph, new KEqualOrLess(k));
+        List<Path> finalPaths = new ArrayList<>();
+        for (Path path : allpaths) {
+            if (path.longitud() == k && path.endsWith(target)) {
+                finalPaths.add(path);
+            }
+        }
+        return finalPaths;
+    }
+
+    private List<Path> paths(Vertex source, Graph graph, KComparation kcompare) {
         List<Path> paths = new ArrayList<>();
         Queue<VertexWithPath> pending = new LinkedList<>();
         pending.offer(new VertexWithPath(source));
-        int node = 0;
+        int edgesNumber = 0;
         while (!pending.isEmpty()) {
             VertexWithPath u = pending.poll();
             Edges edges = graph.edges(u.vertex);
-            node = node + 1;
-            if (node <= nodes) {
-                for (Edge edge : edges) {
-                    Path currentPath = new Path(u.path, edge.getTarget(), edge.getWeight());
-                    paths.add(currentPath);
+            edgesNumber = edgesNumber + 1;
+            for (Edge edge : edges) {
+                Path currentPath = new Path(u.path, edge.getTarget(), edge.getWeight());
+                paths.add(currentPath);
+                if (kcompare.apply(edgesNumber)) {
                     pending.offer(new VertexWithPath(edge.getTarget(), currentPath));
                 }
             }
@@ -46,6 +70,38 @@ public class BFSAllPaths implements AllPaths {
         public VertexWithPath(Vertex vertex, Path path) {
             this.vertex = vertex;
             this.path = path;
+        }
+    }
+
+
+    private interface KComparation extends Function<Integer, Boolean> {
+    }
+
+    private static class KEqual implements KComparation {
+
+        private final int k;
+
+        public KEqual(int k) {
+            this.k = k;
+        }
+
+        @Override
+        public Boolean apply(Integer kth) {
+            return kth < k;
+        }
+    }
+
+    private static class KEqualOrLess implements KComparation {
+
+        private final int k;
+
+        public KEqualOrLess(int k) {
+            this.k = k;
+        }
+
+        @Override
+        public Boolean apply(Integer kth) {
+            return kth <= k;
         }
     }
 
