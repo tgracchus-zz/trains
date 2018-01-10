@@ -6,6 +6,7 @@ import com.trains.graph.Path;
 import com.trains.graph.Vertex;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -34,15 +35,16 @@ public class Dijkstra implements ShortestPath {
 
     }
 
-    private Path buildPath(DijkstraVertex s, DijkstraVertex v) {
-        Path path = new Path(s.vertex);
+    private List<Vertex> buildPath(DijkstraVertex s, DijkstraVertex v) {
+        List<Vertex> path = new ArrayList<>();
+        path.add(s.vertex);
         if (s.vertex.equals(v.vertex)) {
             return path;
         } else if (v.p == null) {
             return null;
         } else {
             path = buildPath(s, v.p);
-            path = new Path(path, v.vertex);
+            path.add(v.vertex);
         }
 
         return path;

@@ -19,14 +19,8 @@ public class Path {
         this.weight = path.weight + weight;
     }
 
-    public Path(Path path, Vertex nextVertex) {
-        this.vertices = new ArrayList<>(path.vertices);
-        this.vertices.add(nextVertex);
-        this.weight = path.weight;
-    }
-
-    public Path(Path path, int weight) {
-        this.vertices = new ArrayList<>(path.vertices);
+    public Path(List<Vertex> vertices, Integer weight) {
+        this.vertices =  new ArrayList<>(vertices);
         this.weight = weight;
     }
 
