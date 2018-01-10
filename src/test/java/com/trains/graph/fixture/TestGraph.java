@@ -5,7 +5,9 @@ import com.trains.graph.Edges;
 import com.trains.graph.Graph;
 import com.trains.graph.Vertex;
 
-public class TestGraph implements Graph{
+import java.util.List;
+
+public class TestGraph implements Graph {
 
     private final Vertex A;
     private final Vertex B;
@@ -22,6 +24,11 @@ public class TestGraph implements Graph{
     @Override
     public Edges edges(Vertex a) {
         return testGraph.edges(a);
+    }
+
+    @Override
+    public List<Vertex> vertices() {
+        return testGraph.vertices();
     }
 
     public TestGraph() {

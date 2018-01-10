@@ -1,6 +1,8 @@
 package com.trains.graph;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AdjacencyListGraph implements Graph {
@@ -27,5 +29,8 @@ public class AdjacencyListGraph implements Graph {
         return adjacencyList.computeIfAbsent(vertex, addingNode -> new Edges());
     }
 
-
+    @Override
+    public List<Vertex> vertices() {
+        return new ArrayList<>(adjacencyList.keySet());
+    }
 }
