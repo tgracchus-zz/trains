@@ -3,6 +3,7 @@ package com.trains.graph.traverse;
 import com.trains.graph.Edge;
 import com.trains.graph.Edges;
 import com.trains.graph.Graph;
+import com.trains.graph.NoSuchPathException;
 import com.trains.graph.Path;
 import com.trains.graph.Vertex;
 
@@ -16,7 +17,7 @@ public class DefaultTraverse implements Traverse {
     }
 
     @Override
-    public Optional<Path> traverse(List<Vertex> traversePath, Graph graph) {
+    public Path traverse(List<Vertex> traversePath, Graph graph) throws NoSuchPathException {
         if (traversePath.size() > 1) {
             Vertex actualVertex = traversePath.get(0);
             Path path = new Path(actualVertex);
@@ -28,14 +29,14 @@ public class DefaultTraverse implements Traverse {
                     Edge edge = adjacentNodeOpt.get();
                     path = new Path(path, nextVertex, edge.getWeight());
                 } else {
-                    return Optional.empty();
+                    throw new NoSuchPathException(traversePath);
                 }
                 actualVertex = nextVertex;
             }
 
-            return Optional.of(path);
+            return path;
         } else {
-            return Optional.empty();
+            throw new NoSuchPathException(traversePath);
         }
     }
 }

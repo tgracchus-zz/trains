@@ -5,7 +5,7 @@ import com.trains.graph.Edges;
 import com.trains.graph.Graph;
 import com.trains.graph.Vertex;
 
-import java.util.List;
+import java.util.Set;
 
 public class TestGraph implements Graph {
 
@@ -27,16 +27,21 @@ public class TestGraph implements Graph {
     }
 
     @Override
-    public List<Vertex> vertices() {
+    public Set<Vertex> vertices() {
         return testGraph.vertices();
     }
 
+    @Override
+    public Set<Vertex> findVertices(Set<String> labels) {
+        return testGraph.findVertices(labels);
+    }
+
     public TestGraph() {
-        A = Vertex.newNode("A");
-        B = Vertex.newNode("B");
-        C = Vertex.newNode("C");
-        D = Vertex.newNode("D");
-        E = Vertex.newNode("E");
+        A = Vertex.newVertex("A");
+        B = Vertex.newVertex("B");
+        C = Vertex.newVertex("C");
+        D = Vertex.newVertex("D");
+        E = Vertex.newVertex("E");
         testGraph = new AdjacencyListGraph();
         testGraph.addEdge(A, B, 5);
         testGraph.addEdge(B, C, 4);
@@ -49,23 +54,23 @@ public class TestGraph implements Graph {
         testGraph.addEdge(A, E, 7);
     }
 
-    public Vertex A() {
-        return A;
+    public String A() {
+        return A.getLabel();
     }
 
-    public Vertex B() {
-        return B;
+    public String B() {
+        return B.getLabel();
     }
 
-    public Vertex C() {
-        return C;
+    public String C() {
+        return C.getLabel();
     }
 
-    public Vertex D() {
-        return D;
+    public String D() {
+        return D.getLabel();
     }
 
-    public Vertex E() {
-        return E;
+    public String E() {
+        return E.getLabel();
     }
 }

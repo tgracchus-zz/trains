@@ -29,7 +29,7 @@ public class Vertex {
         return label != null ? label.hashCode() : 0;
     }
 
-    public static Vertex newNode(String label) {
+    public static Vertex newVertex(String label) {
         return new Vertex(label);
 
     }

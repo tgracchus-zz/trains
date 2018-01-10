@@ -1,7 +1,7 @@
 package com.trains.graph.traverse;
 
 
-import com.trains.graph.Vertex;
+import com.trains.graph.NoSuchPathException;
 import com.trains.graph.fixture.TestGraph;
 import com.trains.graph.fixture.TestGraphFixture;
 import org.junit.Before;
@@ -24,38 +24,38 @@ public class DefaultTraverseTest {
     }
 
     @Test
-    public void checkABCTraverse() {
-        List<Vertex> ABCTraverse = Arrays.asList(testGraph.A(), testGraph.B(), testGraph.C());
+    public void checkABCTraverse() throws NoSuchPathException {
+        List<String> ABCTraverse = Arrays.asList(testGraph.A(), testGraph.B(), testGraph.C());
         testGraphFixture.checkValidTraverse(ABCTraverse, 3, 9);
     }
 
     @Test
-    public void checkADTraverse() {
-        List<Vertex> ABCTraverse = Arrays.asList(testGraph.A(), testGraph.D());
+    public void checkADTraverse() throws NoSuchPathException {
+        List<String> ABCTraverse = Arrays.asList(testGraph.A(), testGraph.D());
         testGraphFixture.checkValidTraverse(ABCTraverse, 2, 5);
     }
 
     @Test
-    public void checkADCTraverse() {
-        List<Vertex> ABCTraverse = Arrays.asList(testGraph.A(), testGraph.D(), testGraph.C());
+    public void checkADCTraverse() throws NoSuchPathException {
+        List<String> ABCTraverse = Arrays.asList(testGraph.A(), testGraph.D(), testGraph.C());
         testGraphFixture.checkValidTraverse(ABCTraverse, 3, 13);
     }
 
-    @Test
-    public void checkAEDTraverse() {
-        List<Vertex> ABCTraverse = Arrays.asList(testGraph.A(), testGraph.E(), testGraph.D());
+    @Test(expected = NoSuchPathException.class)
+    public void checkAEDTraverse() throws NoSuchPathException {
+        List<String> ABCTraverse = Arrays.asList(testGraph.A(), testGraph.E(), testGraph.D());
         testGraphFixture.checkInvalidTraverse(ABCTraverse);
     }
 
-    @Test
-    public void checkEmptyTraverse() {
-        List<Vertex> ABCTraverse = new ArrayList<>();
+    @Test(expected = NoSuchPathException.class)
+    public void checkEmptyTraverse() throws NoSuchPathException {
+        List<String> ABCTraverse = new ArrayList<>();
         testGraphFixture.checkInvalidTraverse(ABCTraverse);
     }
 
-    @Test
-    public void checkOnlyOneElementTraverse() {
-        List<Vertex> ABCTraverse = Arrays.asList(testGraph.A());
+    @Test(expected = NoSuchPathException.class)
+    public void checkOnlyOneElementTraverse() throws NoSuchPathException {
+        List<String> ABCTraverse = Arrays.asList(testGraph.A());
         testGraphFixture.checkInvalidTraverse(ABCTraverse);
     }
 }

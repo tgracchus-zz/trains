@@ -3,6 +3,7 @@ package com.trains.graph.fixture;
 import com.trains.graph.Edge;
 import com.trains.graph.Edges;
 import com.trains.graph.Graph;
+import com.trains.graph.NoSuchPathException;
 import com.trains.graph.Path;
 import com.trains.graph.Vertex;
 import com.trains.graph.traverse.Traverse;
@@ -11,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class TestGraphFixture {
@@ -30,21 +30,18 @@ public class TestGraphFixture {
         return testGraph;
     }
 
-    public void checkValidTraverse(List<Vertex> traversal, int expectedLength, int expectedtedWeight) {
-        Optional<Path> traverseOpt = this.traverse.traverse(traversal, testGraph);
-        assertTrue(traverseOpt.isPresent());
-        Path path = traverseOpt.get();
+    public void checkValidTraverse(List<String> traversal, int expectedLength, int expectedtedWeight) throws NoSuchPathException {
+        Path path = this.traverse.traverse(traversal, testGraph);
         assertEquals(expectedLength, path.longitud());
         for (int i = 0; i < traversal.size(); i++) {
-            Vertex traversalVertex = traversal.get(i);
-            assertEquals(path.get(i), traversalVertex);
+            String traversalVertex = traversal.get(i);
+            assertEquals(path.get(i).getLabel(), traversalVertex);
             assertEquals(expectedtedWeight, path.weight());
         }
     }
 
-    public void checkInvalidTraverse(List<Vertex> traversal) {
-        Optional<Path> traverseOpt = this.traverse.traverse(traversal, testGraph);
-        assertFalse(traverseOpt.isPresent());
+    public void checkInvalidTraverse(List<String> traversal) throws NoSuchPathException {
+        Path traverseOpt = this.traverse.traverse(traversal, testGraph);
     }
 
     public void checkValidEdges(Vertex a, List<EdgeCheck> checks) {
@@ -57,8 +54,6 @@ public class TestGraphFixture {
             Edge edge = edgeOpt.get();
             assertEquals(check.expectedWeight, edge.getWeight());
         }
-
-
     }
 
 

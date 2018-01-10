@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class AdjacencyListGraph implements Graph {
 
@@ -30,7 +31,19 @@ public class AdjacencyListGraph implements Graph {
     }
 
     @Override
-    public List<Vertex> vertices() {
-        return new ArrayList<>(adjacencyList.keySet());
+    public Set<Vertex> vertices() {
+        return adjacencyList.keySet();
+    }
+
+    @Override
+    public List<Vertex> findVertices(List<String> labels) {
+        List<Vertex> vertices = new ArrayList<>();
+        for (String label : labels) {
+            Vertex vertex = Vertex.newVertex(label);
+            if (adjacencyList.containsKey(vertex)) {
+                vertices.add(vertex);
+            }
+        }
+        return vertices;
     }
 }

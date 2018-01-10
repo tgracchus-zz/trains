@@ -2,6 +2,7 @@ package com.trains.graph;
 
 
 import java.util.List;
+import java.util.Set;
 
 public interface Graph {
 
@@ -9,6 +10,8 @@ public interface Graph {
 
     Edges edges(Vertex a);
 
-    List<Vertex> vertices();
+    Set<Vertex> vertices();
+
+    List<Vertex> findVertices(List<String> labels);
 
 }
