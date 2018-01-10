@@ -1,9 +1,12 @@
-package com.newrelic.trains.graph;
+package com.trains.graph;
 
-public class Node {
+import java.util.Objects;
+
+public class Vertex {
     private final String label;
 
-    private Node(String label) {
+    private Vertex(String label) {
+        Objects.requireNonNull(label);
         this.label = label;
     }
 
@@ -16,9 +19,9 @@ public class Node {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Node node = (Node) o;
+        Vertex vertex = (Vertex) o;
 
-        return label != null ? label.equals(node.label) : node.label == null;
+        return label != null ? label.equals(vertex.label) : vertex.label == null;
     }
 
     @Override
@@ -26,14 +29,14 @@ public class Node {
         return label != null ? label.hashCode() : 0;
     }
 
-    public static Node newNode(String label) {
-        return new Node(label);
+    public static Vertex newNode(String label) {
+        return new Vertex(label);
 
     }
 
     @Override
     public String toString() {
-        return "Node{" +
+        return "Vertex{" +
                 "label='" + label + '\'' +
                 '}';
     }
