@@ -16,7 +16,7 @@ public class BFSAllPaths implements AllPaths {
 
     @Override
     public List<Path> pathsUpTo(int k, Vertex source, Vertex target, Graph graph) {
-        List<Path> allpaths = paths(source, graph, new KEqualOrLess(k));
+        List<Path> allpaths = paths(source, graph, new AlwaysAdd(), new PathLengthEqualOrLess(k));
         List<Path> finalPaths = new ArrayList<>();
         for (Path path : allpaths) {
             if (path.endsWith(target)) {
@@ -28,7 +28,7 @@ public class BFSAllPaths implements AllPaths {
 
     @Override
     public List<Path> pathsEqualsTo(int k, Vertex source, Vertex target, Graph graph) {
-        List<Path> allpaths = paths(source, graph, new KEqualOrLess(k));
+        List<Path> allpaths = paths(source, graph, new AlwaysAdd(), new PathLengthEqualOrLess(k));
         List<Path> finalPaths = new ArrayList<>();
         for (Path path : allpaths) {
             if (path.longitud() == k && path.endsWith(target)) {
@@ -38,19 +38,31 @@ public class BFSAllPaths implements AllPaths {
         return finalPaths;
     }
 
-    private List<Path> paths(Vertex source, Graph graph, KComparation kcompare) {
+    @Override
+    public List<Path> pathsWeightEqualsTo(int weight, Vertex source, Vertex target, Graph graph) {
+        List<Path> allpaths = paths(source, graph, new AddIfWeightEqualOrLess(weight), new AddIfWeightEqualOrLess(weight));
+        List<Path> finalPaths = new ArrayList<>();
+        for (Path path : allpaths) {
+            if (path.endsWith(target)) {
+                finalPaths.add(path);
+            }
+        }
+        return finalPaths;
+    }
+
+    private List<Path> paths(Vertex source, Graph graph, PathFunction addFunction, PathFunction continueFunction) {
         List<Path> paths = new ArrayList<>();
         Queue<VertexWithPath> pending = new LinkedList<>();
         pending.offer(new VertexWithPath(source));
-        int edgesNumber = 0;
         while (!pending.isEmpty()) {
             VertexWithPath u = pending.poll();
             Edges edges = graph.edges(u.vertex);
-            edgesNumber = edgesNumber + 1;
             for (Edge edge : edges) {
                 Path currentPath = new Path(u.path, edge.getTarget(), edge.getWeight());
-                paths.add(currentPath);
-                if (kcompare.apply(edgesNumber)) {
+                if (addFunction.apply(currentPath)) {
+                    paths.add(currentPath);
+                }
+                if (continueFunction.apply(currentPath)) {
                     pending.offer(new VertexWithPath(edge.getTarget(), currentPath));
                 }
             }
@@ -74,34 +86,43 @@ public class BFSAllPaths implements AllPaths {
     }
 
 
-    private interface KComparation extends Function<Integer, Boolean> {
+    private interface PathFunction extends Function<Path, Boolean> {
     }
 
-    private static class KEqual implements KComparation {
+    private static class AlwaysAdd implements PathFunction {
+
+        @Override
+        public Boolean apply(Path currentPath) {
+            return true;
+        }
+    }
+
+
+    private static class PathLengthEqualOrLess implements PathFunction {
 
         private final int k;
 
-        public KEqual(int k) {
+        public PathLengthEqualOrLess(int k) {
             this.k = k;
         }
 
         @Override
-        public Boolean apply(Integer kth) {
-            return kth < k;
+        public Boolean apply(Path currentPath) {
+            return currentPath.longitud() <= k;
         }
     }
 
-    private static class KEqualOrLess implements KComparation {
+    private static class AddIfWeightEqualOrLess implements PathFunction {
 
-        private final int k;
+        private final int maxWeight;
 
-        public KEqualOrLess(int k) {
-            this.k = k;
+        public AddIfWeightEqualOrLess(int maxWeight) {
+            this.maxWeight = maxWeight;
         }
 
         @Override
-        public Boolean apply(Integer kth) {
-            return kth <= k;
+        public Boolean apply(Path currentPath) {
+            return currentPath.weight() < maxWeight;
         }
     }
 

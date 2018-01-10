@@ -11,4 +11,6 @@ public interface AllPaths {
     List<Path> pathsUpTo(int k, Vertex source, Vertex target, Graph graph);
 
     List<Path> pathsEqualsTo(int k, Vertex source, Vertex target, Graph graph);
+
+    List<Path> pathsWeightEqualsTo(int weight, Vertex source, Vertex target, Graph graph);
 }
