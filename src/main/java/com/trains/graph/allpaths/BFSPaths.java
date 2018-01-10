@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.Queue;
 import java.util.function.Function;
 
-public class BFSAllPaths implements AllPaths {
+public class BFSPaths implements Paths {
 
     @Override
-    public List<Path> pathsUpTo(int k, Vertex source, Vertex target, Graph graph) {
+    public List<Path> AllPathsUpTo(int k, Vertex source, Vertex target, Graph graph) {
         List<Path> allpaths = paths(source, graph, new AlwaysAdd(), new PathLengthEqualOrLess(k));
         List<Path> finalPaths = new ArrayList<>();
         for (Path path : allpaths) {
@@ -27,7 +27,7 @@ public class BFSAllPaths implements AllPaths {
     }
 
     @Override
-    public List<Path> pathsEqualsTo(int k, Vertex source, Vertex target, Graph graph) {
+    public List<Path> AllPathsEqualsTo(int k, Vertex source, Vertex target, Graph graph) {
         List<Path> allpaths = paths(source, graph, new AlwaysAdd(), new PathLengthEqualOrLess(k));
         List<Path> finalPaths = new ArrayList<>();
         for (Path path : allpaths) {
@@ -39,7 +39,7 @@ public class BFSAllPaths implements AllPaths {
     }
 
     @Override
-    public List<Path> pathsWeightEqualsTo(int weight, Vertex source, Vertex target, Graph graph) {
+    public List<Path> AllPathsWeightLessThan(int weight, Vertex source, Vertex target, Graph graph) {
         List<Path> allpaths = paths(source, graph, new AddIfWeightEqualOrLess(weight), new AddIfWeightEqualOrLess(weight));
         List<Path> finalPaths = new ArrayList<>();
         for (Path path : allpaths) {

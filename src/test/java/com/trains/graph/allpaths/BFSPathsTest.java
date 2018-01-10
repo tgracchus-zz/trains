@@ -11,15 +11,15 @@ import org.junit.Test;
 
 import java.util.List;
 
-public class BFSAllPathsTest {
+public class BFSPathsTest {
 
-    private AllPaths allPaths;
+    private Paths paths;
     private TestGraphFixture testGraphFixture;
     private TestGraph testGraph;
 
     @Before
     public void setUp() {
-        allPaths = new BFSAllPaths();
+        paths = new BFSPaths();
         testGraph = new TestGraph();
         Traverse traverse = new DefaultTraverse();
         testGraphFixture = new TestGraphFixture(testGraph, traverse);
@@ -28,11 +28,11 @@ public class BFSAllPathsTest {
 
     @Test
     public void testAllPaths() {
-        List<Path> paths = allPaths.pathsUpTo(3, testGraph.C(), testGraph.C(), testGraph);
+        List<Path> paths = this.paths.AllPathsUpTo(3, testGraph.C(), testGraph.C(), testGraph);
         Assert.assertFalse(paths.isEmpty());
-        List<Path> threeEdgesPaths = allPaths.pathsEqualsTo(4, testGraph.A(), testGraph.C(), testGraph);
+        List<Path> threeEdgesPaths = this.paths.AllPathsEqualsTo(4, testGraph.A(), testGraph.C(), testGraph);
         Assert.assertFalse(threeEdgesPaths.isEmpty());
-        List<Path> thirtyEdgesPaths = allPaths.pathsWeightEqualsTo(30, testGraph.C(), testGraph.C(), testGraph);
+        List<Path> thirtyEdgesPaths = this.paths.AllPathsWeightLessThan(30, testGraph.C(), testGraph.C(), testGraph);
         Assert.assertFalse(thirtyEdgesPaths.isEmpty());
     }
 }
