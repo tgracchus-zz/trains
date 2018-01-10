@@ -30,17 +30,17 @@ public class TestGraphFixture {
         return testGraph;
     }
 
-    public void checkValidTraverse(List<String> traversal, int expectedLength, int expectedtedWeight) throws NoSuchPathException {
+    public void checkValidTraverse(List<Vertex> traversal, int expectedLength, int expectedtedWeight) throws NoSuchPathException {
         Path path = this.traverse.traverse(traversal, testGraph);
         assertEquals(expectedLength, path.longitud());
         for (int i = 0; i < traversal.size(); i++) {
-            String traversalVertex = traversal.get(i);
-            assertEquals(path.get(i).getLabel(), traversalVertex);
+            Vertex traversalVertex = traversal.get(i);
+            assertEquals(path.get(i), traversalVertex);
             assertEquals(expectedtedWeight, path.weight());
         }
     }
 
-    public void checkInvalidTraverse(List<String> traversal) throws NoSuchPathException {
+    public void checkInvalidTraverse(List<Vertex> traversal) throws NoSuchPathException {
         Path traverseOpt = this.traverse.traverse(traversal, testGraph);
     }
 

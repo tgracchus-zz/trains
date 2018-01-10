@@ -1,13 +1,10 @@
 package com.trains.graph.fixture;
 
 import com.trains.graph.AdjacencyListGraph;
-import com.trains.graph.Edges;
 import com.trains.graph.Graph;
 import com.trains.graph.Vertex;
 
-import java.util.Set;
-
-public class TestGraph implements Graph {
+public class TestGraph extends AdjacencyListGraph {
 
     private final Vertex A;
     private final Vertex B;
@@ -16,25 +13,6 @@ public class TestGraph implements Graph {
     private final Vertex E;
     private final Graph testGraph;
 
-    @Override
-    public void addEdge(Vertex source, Vertex target, int weight) {
-        testGraph.addEdge(source, target, weight);
-    }
-
-    @Override
-    public Edges edges(Vertex a) {
-        return testGraph.edges(a);
-    }
-
-    @Override
-    public Set<Vertex> vertices() {
-        return testGraph.vertices();
-    }
-
-    @Override
-    public Set<Vertex> findVertices(Set<String> labels) {
-        return testGraph.findVertices(labels);
-    }
 
     public TestGraph() {
         A = Vertex.newVertex("A");
@@ -54,23 +32,23 @@ public class TestGraph implements Graph {
         testGraph.addEdge(A, E, 7);
     }
 
-    public String A() {
-        return A.getLabel();
+    public Vertex A() {
+        return A;
     }
 
-    public String B() {
-        return B.getLabel();
+    public Vertex B() {
+        return B;
     }
 
-    public String C() {
-        return C.getLabel();
+    public Vertex C() {
+        return C;
     }
 
-    public String D() {
-        return D.getLabel();
+    public Vertex D() {
+        return D;
     }
 
-    public String E() {
-        return E.getLabel();
+    public Vertex E() {
+        return E;
     }
 }
