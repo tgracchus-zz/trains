@@ -6,7 +6,7 @@ import com.trains.graph.Vertex;
 
 import java.util.List;
 
-public interface Paths {
+public interface AllPaths {
 
     List<Path> AllPathsUpTo(int k, Vertex source, Vertex target, Graph graph);
 

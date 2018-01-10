@@ -2,6 +2,7 @@ package com.trains.graph;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Path {
     private final List<Vertex> vertices;
@@ -20,11 +21,11 @@ public class Path {
     }
 
     public Path(List<Vertex> vertices, Integer weight) {
-        this.vertices =  new ArrayList<>(vertices);
+        this.vertices = new ArrayList<>(vertices);
         this.weight = weight;
     }
 
-    public int longitud() {
+    public int size() {
         return vertices.size();
     }
 
@@ -45,4 +46,17 @@ public class Path {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Path path = (Path) o;
+        return Objects.equals(vertices, path.vertices);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(vertices);
+    }
 }

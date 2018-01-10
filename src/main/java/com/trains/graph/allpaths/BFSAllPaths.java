@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.function.Function;
 
-public class BFSPaths implements Paths {
+public class BFSAllPaths implements AllPaths {
 
     @Override
     public List<Path> AllPathsUpTo(int k, Vertex source, Vertex target, Graph graph) {
@@ -31,7 +31,7 @@ public class BFSPaths implements Paths {
         List<Path> allpaths = paths(source, graph, new AlwaysAdd(), new PathLengthEqualOrLess(k));
         List<Path> finalPaths = new ArrayList<>();
         for (Path path : allpaths) {
-            if (path.longitud() == k && path.endsWith(target)) {
+            if (path.size() == k + 1 && path.endsWith(target)) {
                 finalPaths.add(path);
             }
         }
@@ -108,7 +108,7 @@ public class BFSPaths implements Paths {
 
         @Override
         public Boolean apply(Path currentPath) {
-            return currentPath.longitud() <= k;
+            return currentPath.size() <= k;
         }
     }
 

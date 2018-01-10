@@ -1,7 +1,6 @@
-package com.trains.graph.fixture;
+package com.trains.graph;
 
 import com.trains.graph.AdjacencyListGraph;
-import com.trains.graph.Graph;
 import com.trains.graph.Vertex;
 
 public class TestGraph extends AdjacencyListGraph {
@@ -11,8 +10,6 @@ public class TestGraph extends AdjacencyListGraph {
     private final Vertex C;
     private final Vertex D;
     private final Vertex E;
-    private final Graph testGraph;
-
 
     public TestGraph() {
         A = Vertex.newVertex("A");
@@ -20,16 +17,15 @@ public class TestGraph extends AdjacencyListGraph {
         C = Vertex.newVertex("C");
         D = Vertex.newVertex("D");
         E = Vertex.newVertex("E");
-        testGraph = new AdjacencyListGraph();
-        testGraph.addEdge(A, B, 5);
-        testGraph.addEdge(B, C, 4);
-        testGraph.addEdge(C, D, 8);
-        testGraph.addEdge(D, C, 8);
-        testGraph.addEdge(D, E, 6);
-        testGraph.addEdge(A, D, 5);
-        testGraph.addEdge(C, E, 2);
-        testGraph.addEdge(E, B, 3);
-        testGraph.addEdge(A, E, 7);
+        addEdge(A, B, 5);
+        addEdge(B, C, 4);
+        addEdge(C, D, 8);
+        addEdge(D, C, 8);
+        addEdge(D, E, 6);
+        addEdge(A, D, 5);
+        addEdge(C, E, 2);
+        addEdge(E, B, 3);
+        addEdge(A, E, 7);
     }
 
     public Vertex A() {

@@ -1,33 +1,28 @@
 package com.trains.graph;
 
 
-import com.trains.graph.fixture.TestGraph;
-import com.trains.graph.fixture.TestGraphFixture;
-import com.trains.graph.traverse.DefaultTraverse;
-import com.trains.graph.traverse.Traverse;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
 
-import static com.trains.graph.fixture.TestGraphFixture.EdgeCheck;
+import static com.trains.graph.GraphFixture.EdgeCheck;
 
 public class AdjacencyListGraphTestFixture {
 
-    private TestGraphFixture testGraphFixture;
+    private GraphFixture graphFixture;
     private TestGraph testGraph;
 
     @Before
     public void setUp() {
         testGraph = new TestGraph();
-        Traverse traverse = new DefaultTraverse();
-        testGraphFixture = new TestGraphFixture(testGraph, traverse);
+        graphFixture = new GraphFixture();
     }
 
     @Test
     public void checkAEdges() {
-        testGraphFixture.checkValidEdges(testGraph.A(),
+        graphFixture.checkValidEdges(testGraph.edges(testGraph.A()),
                 Arrays.asList(
                         EdgeCheck.newEdgeCheck(testGraph.B(), 5),
                         EdgeCheck.newEdgeCheck(testGraph.D(), 5),
@@ -38,7 +33,7 @@ public class AdjacencyListGraphTestFixture {
 
     @Test
     public void checBEEdges() {
-        testGraphFixture.checkValidEdges(testGraph.B(),
+        graphFixture.checkValidEdges(testGraph.edges(testGraph.B()),
                 Collections.singletonList(
                         EdgeCheck.newEdgeCheck(testGraph.C(), 4)
                 )
@@ -47,7 +42,7 @@ public class AdjacencyListGraphTestFixture {
 
     @Test
     public void checkCEdges() {
-        testGraphFixture.checkValidEdges(testGraph.C(),
+        graphFixture.checkValidEdges(testGraph.edges(testGraph.C()),
                 Arrays.asList(
                         EdgeCheck.newEdgeCheck(testGraph.E(), 2),
                         EdgeCheck.newEdgeCheck(testGraph.D(), 8)
@@ -57,7 +52,7 @@ public class AdjacencyListGraphTestFixture {
 
     @Test
     public void checkDEdges() {
-        testGraphFixture.checkValidEdges(testGraph.D(),
+        graphFixture.checkValidEdges(testGraph.edges(testGraph.D()),
                 Arrays.asList(
                         EdgeCheck.newEdgeCheck(testGraph.C(), 8),
                         EdgeCheck.newEdgeCheck(testGraph.E(), 6)
@@ -67,7 +62,7 @@ public class AdjacencyListGraphTestFixture {
 
     @Test
     public void checkEEdges() {
-        testGraphFixture.checkValidEdges(testGraph.E(),
+        graphFixture.checkValidEdges(testGraph.edges(testGraph.E()),
                 Collections.singletonList(
                         EdgeCheck.newEdgeCheck(testGraph.B(), 3)
                 )
