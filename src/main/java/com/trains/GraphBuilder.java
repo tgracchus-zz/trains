@@ -1,6 +1,6 @@
 package com.trains;
 
-import com.trains.graph.AdjacencyListGraph;
+import com.trains.graph.adjancency.AdjacencyListGraph;
 import com.trains.graph.Graph;
 import com.trains.graph.Vertex;
 

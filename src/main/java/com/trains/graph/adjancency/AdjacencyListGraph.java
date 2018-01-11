@@ -1,4 +1,9 @@
-package com.trains.graph;
+package com.trains.graph.adjancency;
+
+import com.trains.graph.Edge;
+import com.trains.graph.Edges;
+import com.trains.graph.Graph;
+import com.trains.graph.Vertex;
 
 import java.util.ArrayList;
 import java.util.HashMap;

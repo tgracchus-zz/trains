@@ -1,7 +1,7 @@
 package com.trains.graph.traverse;
 
+import com.trains.exception.NoSuchPathException;
 import com.trains.graph.Graph;
-import com.trains.graph.NoSuchPathException;
 import com.trains.graph.Path;
 import com.trains.graph.Vertex;
 

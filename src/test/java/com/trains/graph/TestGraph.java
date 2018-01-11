@@ -1,7 +1,6 @@
 package com.trains.graph;
 
-import com.trains.graph.AdjacencyListGraph;
-import com.trains.graph.Vertex;
+import com.trains.graph.adjancency.AdjacencyListGraph;
 
 public class TestGraph extends AdjacencyListGraph {
 

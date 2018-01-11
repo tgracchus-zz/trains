@@ -1,4 +1,6 @@
-package com.trains.graph;
+package com.trains.exception;
+
+import com.trains.graph.Vertex;
 
 import java.util.List;
 

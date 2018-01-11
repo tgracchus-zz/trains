@@ -6,14 +6,12 @@ import com.trains.graph.Path;
 import com.trains.graph.Vertex;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Dijkstra implements ShortestPath {
-
 
     @Override
     public Path shortestPath(Vertex source, Vertex target, Graph graph) {
@@ -32,7 +30,27 @@ public class Dijkstra implements ShortestPath {
         DijkstraVertex sourceV = dijkstraVertexMap.get(source);
         DijkstraVertex targetV = dijkstraVertexMap.get(target);
         return new Path(buildPath(sourceV, targetV), targetV.weight);
+    }
 
+
+    private DijkstraVertexMap initSingleSource(Vertex source, Graph graph) {
+        DijkstraVertexMap dijkstraVertexMap = new DijkstraVertexMap();
+        for (Vertex vertex : graph.vertices()) {
+            //Improvement: Use a mark for infinite instead of Integer.MAX_VALUE / 2
+            DijkstraVertex dijkstraVertex = new DijkstraVertex(vertex, Integer.MAX_VALUE / 2, null);
+            dijkstraVertexMap.put(dijkstraVertex);
+        }
+
+        //DijkstraVertex dijkstraVertex = new DijkstraVertex(source, 0, null);
+       // dijkstraVertexMap.put(dijkstraVertex);
+        return dijkstraVertexMap;
+    }
+
+    private void relax(DijkstraVertex u, DijkstraVertex v, int weight) {
+        if (v.weight > u.weight + weight) {
+            v.weight = u.weight + weight;
+            v.p = u;
+        }
     }
 
     private List<Vertex> buildPath(DijkstraVertex s, DijkstraVertex v) {
@@ -46,20 +64,17 @@ public class Dijkstra implements ShortestPath {
             path = buildPath(s, v.p);
             path.add(v.vertex);
         }
-
         return path;
     }
 
     private class DijkstraVertexMap {
         private final Map<Vertex, DijkstraVertex> vertexMap;
 
-
         public DijkstraVertexMap() {
             this.vertexMap = new HashMap<>();
         }
 
-
-        public void add(DijkstraVertex dijkstraVertex) {
+        public void put(DijkstraVertex dijkstraVertex) {
             vertexMap.put(dijkstraVertex.vertex, dijkstraVertex);
         }
 
@@ -94,22 +109,5 @@ public class Dijkstra implements ShortestPath {
         }
     }
 
-    private DijkstraVertexMap initSingleSource(Vertex source, Graph graph) {
-        DijkstraVertexMap dijkstraVertexMap = new DijkstraVertexMap();
-        for (Vertex vertex : graph.vertices()) {
-            DijkstraVertex dijkstraVertex = new DijkstraVertex(vertex, Integer.MAX_VALUE / 2, null);
-            dijkstraVertexMap.add(dijkstraVertex);
-        }
-        DijkstraVertex dijkstraVertex = new DijkstraVertex(source, 0, null);
-        dijkstraVertexMap.add(dijkstraVertex);
-        return dijkstraVertexMap;
-    }
-
-    private void relax(DijkstraVertex u, DijkstraVertex v, int weight) {
-        if (v.weight > u.weight + weight) {
-            v.weight = u.weight + weight;
-            v.p = u;
-        }
-    }
 
 }
