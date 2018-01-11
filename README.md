@@ -1,7 +1,7 @@
 # Trains
 
 ## Instructions to build and execute
-- To build it execute
+- To build it, execute
 ```
 ./gradlew clean build 
 ```
