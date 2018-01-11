@@ -20,8 +20,8 @@ public class Path {
         this.weight = path.weight + weight;
     }
 
-    public Path(List<Vertex> vertices, Integer weight) {
-        this.vertices = new ArrayList<>(vertices);
+    public Path(List<Vertex> vertices, int weight) {
+        this.vertices = vertices;
         this.weight = weight;
     }
 
@@ -58,5 +58,13 @@ public class Path {
     public int hashCode() {
 
         return Objects.hash(vertices);
+    }
+
+    @Override
+    public String toString() {
+        return "Path{" +
+                "vertices=" + vertices +
+                ", weight=" + weight +
+                '}';
     }
 }

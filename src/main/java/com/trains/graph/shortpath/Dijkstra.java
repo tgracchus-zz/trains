@@ -6,7 +6,6 @@ import com.trains.graph.Path;
 import com.trains.graph.Vertex;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,8 +18,8 @@ public class Dijkstra implements ShortestPath {
         List<DijkstraVertex> q = new ArrayList<>(dijkstraVertexMap.vertexMap.values());
 
         while (!q.isEmpty()) {
-            Collections.sort(q);//Find min, can be improved
-            DijkstraVertex u = q.remove(0);
+            DijkstraVertex u = min(q);
+            q.remove(u);
             for (Edge ve : graph.edges(u.vertex)) {
                 DijkstraVertex v = dijkstraVertexMap.get(ve.getTarget());
                 relax(u, v, ve.getWeight());
@@ -36,21 +35,43 @@ public class Dijkstra implements ShortestPath {
     private DijkstraVertexMap initSingleSource(Vertex source, Graph graph) {
         DijkstraVertexMap dijkstraVertexMap = new DijkstraVertexMap();
         for (Vertex vertex : graph.vertices()) {
-            //Improvement: Use a mark for infinite instead of Integer.MAX_VALUE / 2
-            DijkstraVertex dijkstraVertex = new DijkstraVertex(vertex, Integer.MAX_VALUE / 2, null);
+            DijkstraVertex dijkstraVertex = new DijkstraVertex(vertex, null, null);
             dijkstraVertexMap.put(dijkstraVertex);
         }
 
-        //DijkstraVertex dijkstraVertex = new DijkstraVertex(source, 0, null);
-       // dijkstraVertexMap.put(dijkstraVertex);
+        DijkstraVertex dijkstraVertex = new DijkstraVertex(source, 0, null);
+        dijkstraVertexMap.put(dijkstraVertex);
         return dijkstraVertexMap;
     }
 
     private void relax(DijkstraVertex u, DijkstraVertex v, int weight) {
-        if (v.weight > u.weight + weight) {
-            v.weight = u.weight + weight;
+        int cmp;
+        Integer add;
+        if (u.weight != null) {
+            cmp = u.weight + weight;
+            add = cmp;
+        } else {
+            cmp = Integer.MAX_VALUE;
+            add = null;
+        }
+        if (v.weight() > cmp) {
+            v.weight = add;
             v.p = u;
         }
+    }
+
+    private DijkstraVertex min(List<DijkstraVertex> vertexes) {
+        DijkstraVertex minimum = null;
+        for (DijkstraVertex vertex : vertexes) {
+            if (minimum == null) {
+                minimum = vertex;
+            } else {
+                if (vertex.weight() < minimum.weight()) {
+                    minimum = vertex;
+                }
+            }
+        }
+        return minimum;
     }
 
     private List<Vertex> buildPath(DijkstraVertex s, DijkstraVertex v) {
@@ -97,6 +118,14 @@ public class Dijkstra implements ShortestPath {
         @Override
         public int compareTo(DijkstraVertex dijkstraVertex) {
             return Integer.compare(weight, dijkstraVertex.weight);
+        }
+
+        public Integer weight() {
+            if (weight == null) {
+                return Integer.MAX_VALUE;
+            } else {
+                return weight;
+            }
         }
 
         @Override
