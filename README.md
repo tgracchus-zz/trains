@@ -14,7 +14,7 @@ Assumptions:
 Output 9, is about shortest path from B to B. A shortest path, by definition, do not contain cycles.  
 The output, imho, should be 0. If we look for the kth shortest path,in this case the 2th shortestpath, then it can be 9. Anyway I decide to yield a 0.
 
-Reference: 
+Reference:  
 Introduction to Algorithms, Third Edition  
 By Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest and Clifford Stein  
 Page 646
