@@ -10,7 +10,7 @@ Instructions to build and execute
 - Execute it with 
 ```./bin/trains```
 
-Assumptions:
+Assumptions:  
 Output 9, is about shortest path from B to B. A shortest path, by definition, do not contain cycles.  
 The output, imho, should be 0. If we look for the kth shortest path,in this case the 2th shortestpath, then it can be 9. Anyway I decide to yield a 0.
 
